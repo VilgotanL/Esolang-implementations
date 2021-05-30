@@ -40,19 +40,24 @@ async function transpile(code) {
     let loopStack = [];
 
     for(let i=0; i<code.length; i++) {
-        if("+-><,.".includes(code[i])) {
+        if("+-,.".includes(code[i])) {
             newCode += code[i];
+        } else if(code[i] === ">") {
+            newCode += ">>";
+        } else if(code[i] === "<") {
+            newCode += "<<";
         } else if(code[i] === "[") {
             let id = getId();
-            newCode += ":@" + id + "\n";
+            newCode += ":@" + id + ">\n";
             lineNum++;
+            newCode += "<";
             loopStack.push([id, lineNum]);
         } else if(code[i] === "]") {
             if(loopStack.length === 0) err("Error: Unbalanced square brackets");
             let data = loopStack.pop();
             let id = data[0];
             let n = data[1];
-            newCode += ":" + (lineNum+1) + ":" + n + "\n";
+            newCode += ":" + (lineNum+1) + ">:" + n + "\n";
             lineNum++;
             newCode = newCode.replaceAll("@" + id, ""+lineNum);
         }
