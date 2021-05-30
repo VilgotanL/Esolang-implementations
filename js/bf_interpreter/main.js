@@ -29,10 +29,10 @@ function sleep(ms) {
 
 
 
-async function runGotoFuck(code) {
+async function run(code) {
     let mem = [0];
     let p = 0;
-    
+
     let iters = 0;
     for(let i=0; i<code.length; i++) {
         if(i < 0 || i >= code.length) break;
@@ -56,23 +56,44 @@ async function runGotoFuck(code) {
         } else if(code[i] === ",") {
             let charCode = (prompt("Enter a character:") ?? "").charCodeAt(0) || 0;
             mem[p] = charCode;
-        } else if(code[i] === ":") {
-            let str = "";
-            for(let j=i+1; j<code.length; j++) {
-                if("0123456789".includes(code[j])) {
-                    str += code[j];
-                } else {
-                    break;
-                }
-            }
-            let n = Number(str) || 0; //make sure not NaN
-            
+        } else if(code[i] === "[") {
             if(mem[p] === 0) {
-                console.log(n);
-                i = n - 2;
+                let found = false;
+                let inset = 0;
+                for(let j=i; j<code.length; j++) {
+                    if(code[j] === "[") {
+                        inset++;
+                    } else if(code[j] === "]") {
+                        inset--;
+                    }
+                    if(code[j] === "]" && inset === 0) {
+                        i = j;
+                        found = true;
+                        break;
+                    }
+                }
+                if(!found) err("Error: Unbalanced square brackets");
+            }
+        } else if(code[i] === "]") {
+            if(mem[p] !== 0) {
+                let found = false;
+                let inset = 0;
+                for(let j=i; j>=0; j--) {
+                    if(code[j] === "]") {
+                        inset++;
+                    } else if(code[j] === "[") {
+                        inset--;
+                    }
+                    if(code[j] === "[" && inset === 0) {
+                        i = j;
+                        found = true;
+                        break;
+                    }
+                }
+                if(!found) err("Error: Unbalanced square brackets");
             }
         }
-        
+
         iters++;
         if(iters > 1000) {
             iters = 0;
@@ -87,7 +108,7 @@ runBtn.addEventListener("click", async function() {
     greenInfo("Running...");
     
     let code = inputEl.value;
-    await runGotoFuck(code);
+    await run(code);
 
     greenInfo("Ran successfully!");
 });
