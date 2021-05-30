@@ -68,7 +68,6 @@ async function runGotoFuck(code) {
             let n = Number(str) || 0; //make sure not NaN
             
             if(mem[p] === 0) {
-                console.log(n);
                 i = n - 2;
             }
         }
