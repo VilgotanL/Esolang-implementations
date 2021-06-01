@@ -2,6 +2,7 @@ const inputEl = document.getElementById("input");
 const outputEl = document.getElementById("output");
 const outputInfo = document.getElementById("output_info");
 const runBtn = document.getElementById("run_btn");
+const dontFreezeBox = document.getElementById("dont_freeze_checkbox");
 
 
 function setInfoClass(str) {
@@ -30,7 +31,80 @@ function sleep(ms) {
 
 
 async function run(code) {
-    let mem = [0];
+
+    //check if brackets balanced
+    let inset = 0;
+    for(let i=0; i<code.length; i++) {
+        if(code[i] === "[") inset++;
+        if(code[i] === "]") inset--;
+    }
+    if(inset !== 0) err("Error: Unbalanced square brackets");
+
+    //parse
+    greenInfo("Parsing...");
+    let tokens = [];
+
+    for(let i=0; i<code.length; i++) {
+        if(!("+-><,.[]".includes(code[i]))) continue;
+
+        if("+-><".includes(code[i])) {
+            let len = 0;
+            for(let j=i; j<code.length; j++) {
+                if(code[j] === code[i]) {
+                    len++;
+                } else {
+                    break;
+                }
+            }
+            tokens.push([code[i], len]);
+            i = i + len - 1;
+        } else {
+            tokens.push([code[i]]);
+        }
+    }
+
+    console.log(tokens);
+
+    function inp() {
+        return (prompt("Enter a character:") ?? "").charCodeAt(0) || 0;
+    }
+    
+    //generate code
+    greenInfo("Generating code...");
+    let newCode = `(async function(){let m=[0],p=0;\n`;
+
+    for(let i=0; i<tokens.length; i++) {
+        let t = tokens[i];
+        if(t[0] === "+") {
+            newCode += `m[p]+=${t[1]};while(m[p]>255)(m[p]-=256);`;
+        } else if(t[0] === "-") {
+            newCode += `m[p]-=${t[1]};while(m[p]<0)(m[p]+=256);`;
+        } else if(t[0] === ">") {
+            newCode += `p+=${t[1]};p>=m.length&&(m.push(${"0, ".repeat(t[1]).slice(0, -2)}));`;
+        } else if(t[0] === "<") {
+            newCode += `p-=${t[1]};`;
+            newCode += `p<0&&err("Error: Pointer less than zero");`;
+        } else if(t[0] === ".") {
+            newCode += "output(String.fromCharCode(m[p]));";
+        } else if(t[0] === ",") {
+            newCode += "m[p]=inp();";
+        } else if(t[0] === "[") {
+            newCode += "while(m[p]!=0){";
+        } else if(t[0] === "]") {
+            if(dontFreezeBox.checked) newCode += "await sleep(0);";
+            newCode += "};";
+        }
+        //newCode += "\nawait sleep(0);console.log(m[p]);";
+    }
+    newCode += `greenInfo("Ran successfully!");})();`;
+
+    console.log(newCode);
+
+    //eval
+    greenInfo("Evaluating...");
+    eval(newCode);
+
+    /*let mem = [0];
     let p = 0;
 
     let iters = 0;
@@ -99,7 +173,7 @@ async function run(code) {
             iters = 0;
             await sleep(0);
         }
-    }
+    }*/
 }
 
 
@@ -108,7 +182,6 @@ runBtn.addEventListener("click", async function() {
     greenInfo("Running...");
     
     let code = inputEl.value;
-    await run(code);
+    run(code);
 
-    greenInfo("Ran successfully!");
 });
