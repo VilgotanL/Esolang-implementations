@@ -1,0 +1,11 @@
+﻿🐢🐢🐢🐢 #input ascii to accumulator
+🐢🐢🐢 #output accumulator as ascii char
+🐢🐢🐢🐢🐢🐢🐢🐢 🐢 #set current cell to accumulator
+#decrement accumulator by 49 '1':
+🐢🐢 🐢🐢🐢🐢🐢🐢🐢🐢🐢🐢🐢🐢🐢🐢🐢🐢🐢🐢🐢🐢🐢🐢🐢🐢🐢🐢🐢🐢🐢🐢🐢🐢🐢🐢🐢🐢🐢🐢🐢🐢🐢🐢🐢🐢🐢🐢🐢🐢🐢
+🐢🐢🐢🐢🐢🐢 🐢 #if not zero (if input not '1'), go to label 1 (exit)
+🐢🐢🐢🐢🐢 🐢🐢 #label 2
+🐢🐢🐢🐢🐢🐢🐢🐢 🐢🐢 #set accumulator to current cell
+🐢🐢🐢 #output accumulator as ascii char
+🐢🐢🐢🐢🐢🐢 🐢🐢 #go to label 2 if not zero (loop infinitely)
+🐢🐢🐢🐢🐢 🐢 #label 1

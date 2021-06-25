@@ -1,0 +1,13 @@
+🐢 🐢 #increment accumulator by num of 🐢 after
+🐢🐢 🐢 #decrement accumulator by num
+🐢🐢🐢 #output accumulator ascii value
+🐢🐢🐢 🐢 #output accumulator as num in base 10
+🐢🐢🐢🐢 #input ascii to accumulator
+🐢🐢🐢🐢🐢 🐢 #define label n where n is the amount of 🐢 for second 🐢s
+🐢🐢🐢🐢🐢🐢 🐢 #goto label n if accumulator not zero
+🐢🐢🐢🐢🐢🐢🐢 🐢 🐢 #move pointer left n times (n is 3rd arg)
+🐢🐢🐢🐢🐢🐢🐢 🐢🐢 🐢 #move pointer right n times
+🐢🐢🐢🐢🐢🐢🐢🐢 🐢 #set current cell to accumulator
+🐢🐢🐢🐢🐢🐢🐢🐢 🐢🐢 #set accumulator to current cell
+
+#tape and accumulator is/contains integer(s), can be negative

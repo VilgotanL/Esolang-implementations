@@ -4,7 +4,7 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Brainfuck Interpreter</title>
+        <title>GotoFuck to Brainfuck Transpiler</title>
 
         <link rel="stylesheet" type="text/css" href="style.css">
 
@@ -13,17 +13,16 @@
     <body>
         <div class="main_div">
             <h1>
-                Brainfuck Interpreter
+                WIP GotoFuck to Brainfuck Transpiler
             </h1>
             <p>by VilgotanL</p>
-            <a href="https://esolangs.org/wiki/Brainfuck">Brainfuck</a>
+            <a href="https://esolangs.org/wiki/GotoFuck">GotoFuck</a>
             <div class="options_div">
-                <p>Don't freeze (slower):</p> <input id="dont_freeze_checkbox" class="options_div_checkbox" type="checkbox"/>
+                <!--<p>Debug:</p> <input id="debug_checkbox" class="options_div_checkbox" type="checkbox" />-->
             </div>
             <textarea id="input" class="input" contenteditable="true" spellcheck="false">code</textarea>
             <div class="btns_div">
-                <button id="run_btn" class="btn">Run</button>
-                <button id="minify_btn" class="btn">Minify</button>
+                <button id="transpile_btn" class="btn">Run</button>
             </div>
             <p id="output_info" class="output_info"></p>
             <pre id="output" class="output" spellcheck="false">output</pre>

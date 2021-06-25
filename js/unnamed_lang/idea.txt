@@ -1,0 +1,42 @@
+OPERATORS:
+= assignment (returns value (second operand))
+: print (returns printed val)
+; input one line (no args, returns input with no newline)
++ add/concat
+- subtract
+* times
+/ divide
+% modulo
+. index string (char by index)
+# string length
+$ substring (string, start, end)
+@ string to number (or zero)
+
+logic (returns 1 or 0):
+==
+!=
+>
+<
+>=
+<=
+&&
+||
+!
+
+TYPES:
+string ("a string")
+number (-42.2) (can have - sign)
+
+DEFAULT VARIABLES:
+LN (current line number)
+
+
+hello-world:
+: "Hello, world!\n"
+
+truth-machine:
+
+= input ;
+: input
+= LN + LN - 0 == input "1"
+

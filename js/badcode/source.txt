@@ -1,0 +1,10 @@
+JUSTANITALIANGUY on discord:
+
+I have an idea for an esolang but i still need a compiler/intepreper.
+It's called BadCode and this is how it works:
+1: adds one
+0: subtracts one
+2: multiplies by two
+o: prints the character as an ascii value
+O:prints a number
+I still need an interpreter, if someone can help me please contact me in private
