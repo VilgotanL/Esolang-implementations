@@ -1,0 +1,37 @@
+push <name> <value>
+pop <name>
+map <name> <x> <a> <b> <c> <d>
+
+push io 65 //print ascii char by code
+push 69 %io //read ascii char code (readline, buffers chars and newline)
+map io %io a b c d //reads line, and maps it and then prints it
+call lib_instr <*args...> //call library function
+
+special vars:
+pc
+io
+
+x / 0 = 0
+
+
+truth-machine:
+push 69 %io #read char into x
+map 420 %69 48 49 6 4 #if(x=='0') y=6 else y=4;
+push io %69 #print(x)
+push pc %420 #goto y
+
+hello world:
+push io 72
+push io 101
+push io 108
+push io 108
+push io 111
+push io 44
+push io 32
+push io 119
+push io 111
+push io 114
+push io 108
+push io 100
+push io 33
+push io 10
