@@ -1,3 +1,5 @@
+//updated untill bogus repo commit a3350364ab
+
 let interpreter = createInterpreter({
     title: "Bogus Interpreter",
     theme: "light",
@@ -7,7 +9,7 @@ let interpreter = createInterpreter({
     ],
     options: [
         {slow: "checkbox", text: "Slow: ", value: false},
-        {debug: "checkbox", text: "Debug: ", value: false},
+        {debug: "checkbox", text: "Debug: ", value: true},
     ],
     buttons: [
         {run: "Run"},
@@ -25,6 +27,7 @@ interpreter.onClick("run", async function() {
 
 async function run(code) {
     let stack = [];
+    let stackB = [];
     let lineNum = 1;
     let inpBuffer = "";
     let functions = {};
@@ -39,8 +42,12 @@ async function run(code) {
         assertLen(1, `Stack underflow!`);
         return stack.pop();
     }
-    function rand() {
-        return Math.floor((Math.random()*2-0.5)*Number.MAX_SAFE_INTEGER);
+    function pushB(...args) {
+        stackB.push(...args);
+    }
+    function popB() {
+        assertLenB(1, `Stack B underflow!`);
+        return stackB.pop();
     }
     function rand_unsigned() {
         return Math.floor(Math.random()*Number.MAX_SAFE_INTEGER);
@@ -58,6 +65,9 @@ async function run(code) {
     }
     function assertLen(n, str) {
         if(stack.length < n) err(str);
+    }
+    function assertLenB(n, str) {
+        if(stackB.length < n) err(str);
     }
     function err(str) {
         interpreter.err(`${str} (at line ${lineNum})`);
@@ -113,8 +123,8 @@ async function run(code) {
         } else if(code[i] === "y") { //yeet (pop/discard)
             assertLen(1, `Stack underflow at yeet`);
             pop();
-        } else if(code[i] === "R") { //random signed integer
-            push(rand());
+        } else if(code[i] === "R") { //random unsigned integer
+            push(rand_unsigned());
         } else if(code[i] === "+") { //add
             assertLen(2, `Stack underflow at add`);
             push(pop() + pop());
@@ -180,6 +190,25 @@ async function run(code) {
             } else err("Invalid use of parenthesis )");
         } else if(code[i] === "(") {
             err("Invalid use of parenthesis (");
+        } else if(code[i] === ">") { //> to B
+            assertLen(1, `Stack underflow at >`);
+            pushB(pop());
+        } else if(code[i] === "<") { //< to A
+            assertLenB(1, `Stack underflow at <`);
+            push(popB());
+        } else if(code[i] === ":") { //: copy to A
+            assertLenB(1, `Stack underflow at :`);
+            push(stackB.at(-1));
+        } else if(code[i] === "`") {
+            let next = code[i+1];
+            if(next === "b") {
+                let breakpoint = `\n== Breakpoint line=${lineNum} spice=${spice}\n== stack a: [${stack.join(",")}]\n== stack b: [${stackB.join(",")}]\n`;
+                if(interpreter.option("debug")) interpreter.output(breakpoint);
+            } else if(next === "d") {
+                assertLen(1, `Stack underflow at \`d`);
+                interpreter.output(pop());
+            } else err(`Invalid debugger command`);
+            i++; //skip
         } else {
             if(isFuncName(code[i])) {
                 let name = code[i];
@@ -198,8 +227,7 @@ async function run(code) {
             } else err(`Invalid instruction: '${code[i]}'`);
         }
 
-        if(interpreter.option("debug")) interpreter.output(`\nstack ${stack.join(",")}\n`);
-
+        
         if(interpreter.option("slow")) await sleep(100);
         iters++;
         if(iters >= 100) {
