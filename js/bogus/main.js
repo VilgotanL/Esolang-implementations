@@ -184,6 +184,8 @@ async function run(code) {
             let start = findOpeningParen(i);
             if(code[start-1] === "!") {
                 i = start-2;
+            } else if(code[start-1] === "?") {
+                //nop
             } else if(isFuncName(code[start-1])) {
                 if(callStack.length <= 0) err("internal error callstack size < 0");
                 i = callStack.pop();
