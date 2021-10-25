@@ -50,7 +50,7 @@ async function run(code) {
         return stackB.pop();
     }
     function rand_unsigned() {
-        return Math.floor(Math.random()*Number.MAX_SAFE_INTEGER);
+        return Math.floor(Math.random()*(2**50)); //seems to generate good random numbers (Number.MAX_SAFE_INTEGER generated only odd numbers)
     }
     function bool(n) {
         if(n !== 0) {
