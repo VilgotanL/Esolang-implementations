@@ -1,0 +1,16 @@
+This program should print: -3
+This program tests the div command operand order, negative denominator and result, and integer truncation (casting to int)
+Explanation: this program prints 31 / (0 - 8) which is -3.875, which when casted to an integer gets "truncated towards zero" which means remove decimal part
+If an interpreter were to floor or round it, it would get -2 which is incorrect
+And if an interpreter forgot to cast it, it would print -3.875, which is also incorrect
+If an interpreter were to do A/B instead of B/A, and do floor/round/trunc or nothing, it would also give an incorrect answer
+
+1234567890123456789012345
+1234567890123456789012345678901
+1234567890123456789012345
+
+1234567890123456789012345
+12345678
+12345678901
+123456789012345678901
+123456789012345
