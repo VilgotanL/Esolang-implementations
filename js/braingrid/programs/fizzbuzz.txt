@@ -1,0 +1,20 @@
+#while not 101, start at 1
+0:100-[101+
+
+#check % 3
+;>: 3%!("F"<."i"<."z"<."z"<.) <
+#check % 5
+;>: 5%!("B"<."u"<."z"<."z"<.) <
+#check not either
+;>: 3%(<;>: 5%(0:<
+	#print integer between 1 and 100 inclusive (preserves, uses four cells to the right, cleans up)
+	;>:[1->1+ ;^:10-!(0:v0:>1+ ;^:10-!(0:v0:>1+<^)v <^)v <]>>>(49:.48:..)!(0:< (48+.<48+.0:>)!(0:<48+.0:>) >)<<<<
+>))<  
+
+#print \n
+>10:.<
+
+#inc num
+1+
+
+101-]

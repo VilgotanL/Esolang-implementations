@@ -1,0 +1,21 @@
+infinite grid in all directions
+command-line I/O, no EOF
+
+><^v move ptr
+, input char
+. output char
+[code] while(code!=0)
+(code) if(code!=0)
+; save to acc
+: load from acc
+digit seq -set acc to value
++ add by acc
+- sub by acc
+* mul by acc
+/ div by acc and trunc (integer division)
+% mod by acc (not javascript remainder %)
+! set cell to not(cell)
+@ set ptr to first cell x, cell of right contains y coordinate
+"string" for each char code, set cell to it then move right once (no esc chars tho)
+~ set cell to sign of acc (-1, 0, or 1)
+# Comment
