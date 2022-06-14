@@ -10,7 +10,7 @@ let interpreter = createInterpreter({
     buttons: [
         {run: "Run"},
     ],
-    code: "code here",
+    code: "printLn \"Hello, world!\"",
     output: "output here",
     highlight: function(code, append, style) {
         append(code);
